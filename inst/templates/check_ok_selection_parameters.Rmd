@@ -129,6 +129,19 @@ heading <- paste("<br/> <br/>",
                  "Dersom en kode merket 0 er spesifikk for den sykdommen/infeksjonen som det",
                  "selekteres for, bør den inkluderes i seleksjonsparametrene. </h5>")
 
+# Removes breed from artkode
+PJSdata <- PJSdata  |> 
+  NVIpjsr::add_PJS_code_description(PJS_variable_type = "auto",
+                                    code_colname = "artkode",
+                                    new_column = "auto",
+                                    position = "last") |> 
+  NVIpjsr::add_PJS_code_description(PJS_variable_type = "artrase",
+                                    code_colname = "art",
+                                    new_column = "artkode",
+                                    backward = TRUE,
+                                    position = "last",
+                                    overwrite = TRUE)
+
 # Counts the number of unique rows at prove-level in the dataset with artkode
 ktr <- OKcheck::count_PJScodes(PJSdata = PJSdata,
                                variable = "artkode",
